@@ -12,6 +12,7 @@ web-build/
 # macOS
 .DS_Store
 
+.env
 
 # Created by https://www.toptal.com/developers/gitignore/api/windows,macos,linux,react,reactnative
 # Edit at https://www.toptal.com/developers/gitignore?templates=windows,macos,linux,react,reactnative
