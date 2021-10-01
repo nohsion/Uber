@@ -27,6 +27,8 @@ const data = [
     },
 ]
 
+const BASIC_TAXI_FARES = 3800
+
 const RideOptionsCard = () => {
     const navigation = useNavigation()
     const [selected, setSelected] = useState(null)
@@ -65,14 +67,27 @@ const RideOptionsCard = () => {
                         />
                         <View style={tw`-ml-6`}>
                             <Text style={tw`text-xl font-semibold`}>{title}</Text>
-                            <Text>Travel time...</Text>
+                            <Text>{travelTimeInformation?.duration.text} Travel Time</Text>
                         </View>
-                        <Text style={tw`text-xl`}>$30</Text>
+                        <Text style={tw`text-xl`}>
+
+                            {new Intl.NumberFormat('ko-KR', {
+                                style: 'currency',
+                                currency: 'KRW'
+                            }).format(
+                                // BASIC_TAXI_FARES + (travelTimeInformation?.duration.value * SURGE_CHARGE_RATE
+                                //     * multiplier * 200) / 60 
+                                BASIC_TAXI_FARES +
+                                ((travelTimeInformation?.duration.value) / 120 * 100 +
+                                    (travelTimeInformation?.distance.value) / 132 * 100) * multiplier
+                            )}
+
+                        </Text>
                     </TouchableOpacity>
                 )}
             />
 
-            <View>
+            <View style={tw`mt-auto border-t border-gray-200`}>
                 <TouchableOpacity
                     disabled={!selected}
                     style={tw`bg-black py-3 m-3 ${!selected && 'bg-gray-300'}`}
