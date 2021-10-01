@@ -2,7 +2,9 @@ import { useNavigation } from '@react-navigation/core'
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, FlatList, Image } from 'react-native'
 import { Icon } from 'react-native-elements/dist/icons/Icon'
+import { useSelector } from 'react-redux'
 import tw from 'tailwind-react-native-classnames'
+import { selectTravelTimeInformation } from '../slices/navSlice'
 
 const data = [
     {
@@ -28,6 +30,7 @@ const data = [
 const RideOptionsCard = () => {
     const navigation = useNavigation()
     const [selected, setSelected] = useState(null)
+    const travelTimeInformation = useSelector(selectTravelTimeInformation)
 
     return (
         <SafeAreaView style={tw`bg-white flex-grow`}>
@@ -38,7 +41,9 @@ const RideOptionsCard = () => {
                 >
                     <Icon name="chevron-left" type="fontawesome" />
                 </TouchableOpacity>
-                <Text style={tw`text-center py-5 text-xl`}>Select a Ride</Text>
+                <Text style={tw`text-center py-5 text-xl`}>
+                    Select a Ride - {travelTimeInformation?.distance.text}
+                </Text>
             </View>
 
             <FlatList
