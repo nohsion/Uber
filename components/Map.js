@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Alert, StyleSheet, Text, View } from 'react-native'
 import MapView, { Marker } from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,17 +7,14 @@ import tw from 'tailwind-react-native-classnames';
 import { selectDestination, selectOrigin, setTravelTimeInformation } from '../slices/navSlice';
 import { GOOGLE_MAPS_APIKEY } from '@env'
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/core';
 
 const Map = () => {
     const origin = useSelector(selectOrigin)
     const destination = useSelector(selectDestination)
     const mapRef = useRef(null)
     const dispatch = useDispatch()
-
-    // if (origin && destination) {
-    //     console.log(origin)
-    //     console.log(destination)
-    // }
+    const navigation = useNavigation()
 
     useEffect(() => {
         if (!origin || !destination) return;
@@ -67,6 +64,8 @@ const Map = () => {
                     strokeColor="black"
                     onError={(errorMessage) => {
                         console.log('GOT AN ERROR: ', errorMessage)
+                        Alert.alert('길찾기가 제공되지 않는 지역입니다. 한국..')
+                        navigation.navigate("HomeScreen")
                     }}
                 />
             )}
